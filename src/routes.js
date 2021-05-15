@@ -1,0 +1,104 @@
+const express = require('express')
+const router = express.Router()
+
+// Modelo
+const Pergunta = require('./models/Pergunta')
+
+// obter todas perguntas
+router.get('/perguntas', async (req, res) =>{
+    try{
+        const perguntas = await Pergunta.find();
+        return res.status(200).json(perguntas)
+
+    } catch (error) {
+        return res.status(500).json({"error": error})
+    }
+})
+
+// obter uma pergunta específica
+router.get('/perguntas/:id', async (req, res) =>{
+    try{
+        const _id = req.params.id;
+
+        const pergunta = await Pergunta.findOne({_id})
+        if(!pergunta) {
+            return res.status(404).json({})
+        } else {
+            return res.status(200).json(pergunta)
+        }
+
+    } catch (error){
+        return res.status(500).json({"error": error})
+    }
+})
+
+// criar uma nova pergunta
+router.post('/perguntas', async (req, res) =>{
+    try {
+        const { description } = req.body;
+        const { alternatives } = req.body;
+
+        const pergunta = await Pergunta.create({
+            description,
+            alternatives
+        });
+
+        return res.status(201).json(pergunta)
+
+    } catch (error){
+        return res.status(500).json({"error":error})
+    }
+})
+
+// alterar uma pergunta
+router.put('/perguntas/:id', async (req, res) =>{
+    try {
+        const _id = req.params.id
+        const { description, alternatives } = req.body
+
+        let pergunta = await Pergunta.findOne({_id})
+
+        if (!pergunta) {
+            pergunta = await Pergunta.create({
+                description,
+                alternatives
+            })
+            return res.status(201).json(pergunta)
+        } else {
+            pergunta.description = description
+            pergunta.alternatives = alternatives
+            await pergunta.save()
+            return res.status(200).json(pergunta)
+        }
+    } catch (error){
+        return res.status(500).json({"error":error})
+    }
+})
+
+
+// remover uma pergunta
+router.delete('/perguntas/:id', async (req, res) =>{
+    try {
+        const _id = req.params.id
+
+        const pergunta = await Pergunta.deleteOne({_id})
+
+        if (pergunta.deletedCount === 0) {
+            return res.status(404).json()
+        } else {
+            return res.status(204).json()
+        }
+
+    } catch (error){
+        return res.status(500).json({"error":error})
+    }
+})
+
+// URL de teste
+
+// alterar uma pergunta
+router.get('/', (req, res) =>{
+    res.send('Salve!')
+})
+
+module.exports = router
