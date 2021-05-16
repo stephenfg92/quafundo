@@ -113,7 +113,22 @@ router.get('/quiz/:id', async (req, res) =>{
     try{
         const _id = req.params.id;
 
-        const quiz = await Quiz.findOne({_id}).populate("perguntas")
+        const quiz = await Quiz.findOne({_id})
+        //console.log(typeof(quiz))
+        //console.log(quiz.perguntas)
+
+
+        quiz.perguntas.forEach( (pergunta) => {
+            //console.log(pergunta)
+            Pergunta.
+                findOne({_id: pergunta}).
+                populate("perguntas").
+                exec( function (err, pergunta) {
+                    if (err) return handleError(err);
+                    console.log('Pegunta: ', pergunta.description)
+                    //quiz.perguntas = pergunta.description
+                })
+        });
 
         if(!quiz) {
             return res.status(404).json({})
