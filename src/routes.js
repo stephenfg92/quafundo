@@ -189,6 +189,26 @@ router.delete('/quiz/:id', async (req, res) =>{
     }
 })
 
+// Avaliar respostas
+router.post('/responder', async (req, res) =>{
+    try{
+        const respostas = req.body;
+        
+        let resultado = [];
+        for(var p in respostas) {
+            const tentativa = respostas[p]
+            const pergunta = await Pergunta.findOne({_id: p})
+            pergunta.alternatives.map( (alternative, index) =>
+                {if (alternative._id == tentativa) {resultado.push(alternative)}}
+            )
+        }
+        
+        return res.status(200).json(resultado)
 
+    } catch (error) {
+        console.log(error)
+        return res.status(500).json({"error": error})
+    }
+})
 
 module.exports = router
