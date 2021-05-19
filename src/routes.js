@@ -193,16 +193,16 @@ router.delete('/quiz/:id', async (req, res) =>{
 router.post('/responder', async (req, res) =>{
     try{
         const respostas = req.body;
-        
-        let resultado = [];
+
+        let resultado = {};
         for(var p in respostas) {
             const tentativa = respostas[p]
             const pergunta = await Pergunta.findOne({_id: p})
             pergunta.alternatives.map( (alternative, index) =>
-                {if (alternative._id == tentativa) {resultado.push(alternative)}}
+                {if (alternative._id == tentativa) {resultado[alternative._id] = alternative.isCorrect}}
             )
         }
-        
+
         return res.status(200).json(resultado)
 
     } catch (error) {
