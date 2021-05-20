@@ -131,10 +131,12 @@ router.get('/quiz/:id', async (req, res) =>{
 router.post('/quiz', async (req, res) =>{
     try {
         const { description } = req.body;
+        const { imgURL } = req.body;
         const { perguntas } = req.body
 
         const quiz = await Quiz.create({
             description,
+            imgURL,
             perguntas
         });
 
@@ -149,18 +151,20 @@ router.post('/quiz', async (req, res) =>{
 router.put('/quiz/:id', async (req, res) =>{
     try {
         const _id = req.params.id
-        const { description, perguntas } = req.body
+        const { description, imgURL, perguntas } = req.body
 
         let quiz = await Quiz.findOne({_id})
 
         if (!quiz) {
             quiz = await Pergunta.create({
                 description,
+                imgURL,
                 perguntas
             })
             return res.status(201).json(quiz)
         } else {
             quiz.description = description
+            quiz.imgURL = imgURL
             quiz.perguntas = perguntas
             await quiz.save()
             return res.status(200).json(quiz)

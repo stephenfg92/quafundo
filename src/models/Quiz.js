@@ -3,7 +3,7 @@ const Pergunta = require('./Pergunta')
 
 const SchemaQuiz = new mongoose.Schema({
     description: String,
-    //perguntas: [mongoose.Types.ObjectId]
+    imgURL: String,
     perguntas: [{type: mongoose.Types.ObjectId, ref: "Pergunta"}]
 })
 
