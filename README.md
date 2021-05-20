@@ -6,15 +6,17 @@ Esta aplicação é a API do serviço de distribuição de quizzes.
 
 ## Utilização
 
-1. Basta instalar o NodeJS versão 14.17.0 LTS, disponível no seguinte website: https://nodejs.org/
+1. Instale o NodeJS versão 14.17.0 LTS, disponível no seguinte website: https://nodejs.org/
 
 2. Com o NodeJS instalado, clone este repositório usando o comando git clone https://github.com/stephenfg92/quafundo.git. Ou, faça o download do repositório utilizando o botão "Code" disponibilizado pelo GitHub.
 
 3. Instale o banco de dados MongoDB, disponível em https://www.mongodb.com/ , em seu sistema.
 
-4. Utilizando o terminal de seu sistema, navegue até a pasta onde está o repositório e execute o comando `npm run dev`.
+4. Utilizando o terminal de seu sistema, navegue até a pasta onde está o repositório e execute o comando `npm install` para instalar as dependências do projeto.
 
-5. Utilizando os endpoints descritos em `src/routes.js` preencha o banco de dados e aproveite seus quizzes! Para melhor experiência, utilize também a interface de usuário disponibilizada em https://github.com/stephenfg92/quafundo_client .
+5. Na mesma pasta, execute o comando `npm run dev` para iniciar a aplicação.
+
+6. Utilizando os endpoints descritos em `src/routes.js` preencha o banco de dados e aproveite seus quizzes! Para melhor experiência, utilize também a interface de usuário disponibilizada em https://github.com/stephenfg92/quafundo_client .
 
 ## Configuração padrão
 
